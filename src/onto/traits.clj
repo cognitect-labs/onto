@@ -110,8 +110,8 @@
 
     Example:
 
-    (deftrait Organic
-      (methods \"Harvesting methods used to collect the item.\"))"
+        (deftrait Organic
+          (methods \"Harvesting methods used to collect the item.\"))"
   [nm & decls]
   (let [qdecls (map (fn [x] `'~x) decls)]
     `(def ~(with-meta nm {:trait true})

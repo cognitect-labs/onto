@@ -10,7 +10,7 @@
    The `bootstrap` function is a convenience function to load the
    schema.
 
-   Entities and Classes
+   # Entities and Classes
 
    The core premise is that entities can be found to belong to one
    or more classes. This is different than OO design, where you
@@ -31,20 +31,20 @@
    These rules all hold for subproperties of the property in
    question as well.
 
-   Properties
+   # Properties
 
    Properties are represented as Datomic attributes on entities. An
    `oproperty` (object property) resolves to another entity. A
    `dtproperty` (data property) resolves to a value. Both kinds of
    property may be single- or multi-valued.
 
-   Triples
+   # Triples
 
    Object-valued facts can be added by declaring triples with the
    function `t`. A triple consists of a subject, property, and
    entity.
 
-   Transacting
+   # Transacting
 
    All the declarations return datoms. Properties and classes are
    instantiated the first time they are mentioned. The function
@@ -52,40 +52,42 @@
    declarations. `nodes` does a similar job for datoms created by
    `v` and `t`.
 
-   Example (distilled from onto.examples.ecommerce)
+   # Example
 
-   (properties
-     ;; A short description is a string
-     (dtproperty :short-description :string :one)
+   This is distilled from onto.examples.ecommerce.
 
-     ;; Any entity that has a short description is a SKU
-     (domain :short-description \"SKU\")
+       (properties
+         ;; A short description is a string
+         (dtproperty :short-description :string :one)
 
-     ;; A street-date is a point in time
-     (dtproperty :street-date :instant :one)
+         ;; Any entity that has a short description is a SKU
+         (domain :short-description \"SKU\")
 
-     ;; Any entity that has a street date is a SKU
-     (domain :street-date \"SKU\")
+         ;; A street-date is a point in time
+         (dtproperty :street-date :instant :one)
 
-     ;; A long description is a string
-     (dtproperty :long-description :string :one))
+         ;; Any entity that has a street date is a SKU
+         (domain :street-date \"SKU\")
 
-     ;; Create an entity with values that make it a SKU
-     (defn make-sku
-       ([id sd ld]
-         (make-sku id sd ld nil))
-       ([id sd ld avail]
-         (let [uri (sku id)]
-           (nodes
-             (v uri :short-description sd)
-             (v uri :long-description ld)
-             (v uri :street-date avail)))))
+         ;; A long description is a string
+         (dtproperty :long-description :string :one))
 
-     ;; Ask if the entity with label \"sku:1234\" is in fact a SKU
-     (has-class? \"sku:1234\" \"SKU\")
+         ;; Create an entity with values that make it a SKU
+         (defn make-sku
+           ([id sd ld]
+             (make-sku id sd ld nil))
+           ([id sd ld avail]
+             (let [uri (sku id)]
+               (nodes
+                 (v uri :short-description sd)
+                 (v uri :long-description ld)
+                 (v uri :street-date avail)))))
 
-     ;; Ask if that entity is sellable
-     (has-class? \"sku:1234\" \"Available\")"
+         ;; Ask if the entity with label \"sku:1234\" is in fact a SKU
+         (has-class? \"sku:1234\" \"SKU\")
+
+         ;; Ask if that entity is sellable
+         (has-class? \"sku:1234\" \"Available\")"
   (:refer-clojure :exclude [type range])
   (:require [clojure.set :refer [intersection]]
             [datomic.api :as d]))
