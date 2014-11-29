@@ -7,5 +7,8 @@
   :dependencies [[org.clojure/clojure            "1.7.0-alpha4"]
                  [com.datomic/datomic-free       "0.9.5078"]]
 
+  :codox        {:src-dir-uri "https://github.com/cognitect/onto/blob/master/"
+                 :src-linenum-anchor-prefix "L"}
+
   :profiles     {:dev {:dependencies [[org.clojure/test.check      "0.5.8"]]
                        :aliases {"ci" ["do" "clean," "test," "doc," "jar"]}}})
