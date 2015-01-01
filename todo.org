@@ -1,0 +1,20 @@
+* DONE Clean separation
+  CLOSED: [2014-11-29 Sat 10:34]
+- [X] Bring in a copy of db-util.in-memory-db for the test namespaces.
+* DONE CI
+  CLOSED: [2014-11-29 Sat 12:16]
+- [X] Set up CI build on ci.thinkrelevance.com
+- [X] Make a ci script in the repo
+* DONE Doco
+  CLOSED: [2014-11-29 Sat 12:16]
+- [X] Add SCM info for codox links
+- [X] Use markdown formatting for codox
+* TODO Make a release script
+- [ ] Figure out where to deploy to
+- [ ] Set release version
+- [ ] Clean build
+- [ ] Deploy jar
+- [ ] Bump version to next snapshot
+* TODO Backport
+- [ ] Make sim-ng depend on onto.
+- [ ] Remove onto from sim-ng source tree.
