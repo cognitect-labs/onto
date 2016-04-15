@@ -525,6 +525,11 @@
     (concat s-datoms
             (->dtdatoms (second (first s-datoms)) p v))))
 
+(defn +entity
+  "Declare that a thing exists"
+  [obj & {:as opts}]
+  (merge {:db/id (->id obj)} opts))
+
 (defn +class
   "Declare a new class"
   [cls & {:as opts}]
@@ -568,8 +573,8 @@
 (defn dtproperty
   "Define a data-valued property."
   [property t cardinality]
-  (assert (datomic-cardinality cardinality))
-  (assert (datomic-typeof t))
+  (assert (datomic-cardinality cardinality) (str "No cardinality mapping for " cardinality))
+  (assert (datomic-typeof t) (str "No type mapping for " t))
   [(+property property :db/valueType (datomic-typeof t) :db/cardinality (datomic-cardinality cardinality))])
 
 (defn oproperty
