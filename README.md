@@ -29,7 +29,7 @@ the schemata.
 ## Entities and Classes
 
 The core premise is that entities can be found to belong to one or
-more classes. This is different than OO design, where you proscribe
+more classes. This is different than OO design, where you prescribe
 class membership at creation time. Here an entity may gain or lose
 classes by virtue of properties and values that are attached to it.
 
