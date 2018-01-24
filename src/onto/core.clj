@@ -463,15 +463,13 @@
                :when   (not (empty? v))]
            {base {(if (= 1 (count loc)) (first loc) loc) (first v)}})))
 
-(defn ->id
-  "Compute an identifier that is 'relatively unique' for the entity name."
-  [s]
-  (str s))
+(def ^:private ->entity-tempid
+  "Compute a temporary identifier for an entity."
+  str)
 
-(defn ->aid
-  "Compute an identifier that is 'relatively unique' for the property name."
-  [s]
-  (id :db.part/db s))
+(def ^:private ->property-tempid
+  "Compute a temporary identifier for a property."
+  name)
 
 (defn bnode
   "Create a 'blank node', an intermediate entity whose
@@ -490,7 +488,7 @@
   (if (vector? e)
     (let [blank (bnode)]
       (mapcat (fn [[k v]] (t blank k v)) (partition 2 e)))
-    [[:db/add (->id e) :uri e]]))
+    [[:db/add (->entity-tempid e) :uri e]]))
 
 (defn t
   "Make a triple to relate the subject 's' to the object 'o' via the property 'p'."
@@ -511,7 +509,7 @@
   [s p e]
   (if (vector? e)
     (let [blank (bnode)]
-      (concat [[:db/add s p (->id blank)]]
+      (concat [[:db/add s p (->entity-tempid blank)]]
               (mapcat (fn [[k q]] (v blank k q)) (partition 2 e))))
     [[:db/add s p e]]))
 
@@ -526,12 +524,12 @@
 (defn +entity
   "Declare that a thing exists"
   [obj & {:as opts}]
-  (merge {:db/id (->id obj)} opts))
+  (merge {:db/id (->entity-tempid obj)} opts))
 
 (defn +class
   "Declare a new class"
   [cls & {:as opts}]
-  (merge {:db/id (->id cls)
+  (merge {:db/id (->entity-tempid cls)
           :uri cls
           :type  :Class}
          opts))
@@ -539,14 +537,14 @@
 (defn +member
   "Declare an entity to be a member of a class"
   [label & {:as opts}]
-  (merge {:db/id (->id label)
+  (merge {:db/id (->entity-tempid label)
           :uri label}
          opts))
 
 (defn +property
   "Declare a new property."
   [property & {:as opts}]
-  (merge {:db/id                 (->aid property)
+  (merge {:db/id                 (->property-tempid property)
           :db/ident              property
           :type                  :Property
           :db.install/_attribute :db.part/db}
@@ -590,19 +588,19 @@
   "Declare an entity to be a member of a class."
   [member cls]
   [(+class cls)
-   (+member member :type #{(->id cls)})])
+   (+member member :type #{(->entity-tempid cls)})])
 
 (defn subclass
   "Declare a subclass of a class"
   [subclass cls]
   [(+class cls)
-   (+class subclass :subclass #{(->id cls)})])
+   (+class subclass :subclass #{(->entity-tempid cls)})])
 
 (defn subproperty
   "Declare a subproperty of a property"
   [subproperty property]
   [(+property property)
-   (+property subproperty :subproperty #{(->aid property)})])
+   (+property subproperty :subproperty #{(->property-tempid property)})])
 
 (defn label
   "Define a new label property. This is a non-identifying string."
@@ -614,13 +612,13 @@
   "Declare the domain of a property to be the given class."
   [property cls]
   [(+class cls)
-   (+property property :domain (->id cls))])
+   (+property property :domain (->entity-tempid cls))])
 
 (defn range
   "Declare the range of a property to be the given class."
   [property cls]
   [(+class cls)
-   (+property property :range (->id cls))])
+   (+property property :range (->entity-tempid cls))])
 
 (defn functional-property
   "Declare a new functional property."
@@ -640,7 +638,7 @@
      [(+property inverse
                  :db/cardinality (datomic-cardinality cardinality)
                  :db/valueType   :db.type/ref
-                 :inverseof      (->aid prop))]))
+                 :inverseof      (->property-tempid prop))]))
 
 (defn symmetric-property
   "Declare a property to be its own inverse."
@@ -659,8 +657,8 @@
    (+member cls :subclass "SomeValuesRestriction")
    (+class values-cls)
    (+property property)
-   [:db/add (->id cls) :on-property (->aid property)]
-   [:db/add (->id cls) :some-values-from (->id values-cls)]))
+   [:db/add (->entity-tempid cls) :on-property (->property-tempid property)]
+   [:db/add (->entity-tempid cls) :some-values-from (->entity-tempid values-cls)]))
 
 (defn- property-merge
   [& maps]
