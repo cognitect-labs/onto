@@ -148,7 +148,8 @@
      :db/cardinality        :db.cardinality/many
      :db/doc                "Refers to a class, implies that any entity refered to by this property is a member of that class."
      :db.install/_attribute :db.part/db}
-    {:db/id                 #db/id[:db.part/db]
+    ;; Restriction classes are broken at least as early as Datomic 0.9.5656
+#_    {:db/id                 #db/id[:db.part/db]
      :db/ident              :on-property
      :db/valueType          :db.type/ref
      :db/cardinality        :db.cardinality/one
@@ -176,10 +177,10 @@
     [:db/add :label :type :Property]
     [:db/add :FunctionalProperty :subclass :Property]
     [:db/add :InverseFunctionalProperty :subclass :Property]
-    [:db/add :on-property :type :Property]
-    [:db/add :on-property :range :Property]
-    [:db/add :some-values-from :type :Property]
-    [:db/add :some-values-from :range :Class]]])
+#_    [:db/add :on-property :type :Property]
+#_    [:db/add :on-property :range :Property]
+#_    [:db/add :some-values-from :type :Property]
+#_    [:db/add :some-values-from :range :Class]]])
 
 ;; ----------------------------------------
 ;; Inference rules
@@ -198,7 +199,8 @@
      [subclass ?s ?t]
      [type ?o ?s]]])
 
-(def ^:private restriction-classes
+;; Broken at least as early as Datomic 0.9.5656
+#_(def ^:private restriction-classes
   '[[[type ?o ?c]
      [property ?c :some-values-from ?t]
      [property ?c :on-property ?op]
@@ -263,7 +265,7 @@
      [?p :type :InverseFunctionalProperty]]])
 
 (def inferences
-  (concat type-propagation class-propagation restriction-classes subproperty-propagation property-attachment domain-inference range-inference equivalence-inference inverse-property))
+  (concat type-propagation class-propagation #_restriction-classes subproperty-propagation property-attachment domain-inference range-inference equivalence-inference inverse-property))
 
 ;; ----------------------------------------
 ;; Query functions
@@ -651,7 +653,8 @@
    (oproperty prop :many)
    (inverse-of prop prop)))
 
-(defn some-values-from
+;; Broken at least as early as Datomic 0.9.5656
+#_(defn some-values-from
   "Declare an inference, such that an entity which has 'property' _and_ the
    target of 'property' is a member of 'values-cls', then the entity is a
    member of 'cls'."

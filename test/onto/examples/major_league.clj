@@ -7,12 +7,14 @@
    (o/subclass "AllStarPlayer" "MajorLeaguePlayer")
    (o/type "Kaneda" "AllStarPlayer")))
 
-(def all-star-player-properties
-  (o/properties
-   (o/oproperty  :plays-for :many)
-   (o/inverse-of :plays-for :has-player :many)))
+;; Restriction classes (like `some-values-from`) are broken at least
+;; as early as Datomic 0.9.5656
+#_(def all-star-player-properties
+    (o/properties
+     (o/oproperty  :plays-for :many)
+     (o/inverse-of :plays-for :has-player :many)))
 
-(def all-star-player-values
+#_(def all-star-player-values
   (o/nodes
    (o/some-values-from "AllStarPlayers" :plays-for "AllStarTeam")
    (o/t "Cardinals"         :type "Team")

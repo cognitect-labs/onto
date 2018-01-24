@@ -5,8 +5,8 @@
 
   :plugins      [[codox "0.8.10"]]
 
-  :dependencies [[org.clojure/clojure            "1.8.0"]
-                 [com.datomic/datomic-free       "0.9.5394"]]
+  :dependencies [[org.clojure/clojure            "1.9.0"]
+                 [com.datomic/datomic-free       "0.9.5656"]]
 
   :codox        {:src-dir-uri "https://github.com/cognitect-labs/onto/blob/master/"
                  :src-linenum-anchor-prefix "L"
