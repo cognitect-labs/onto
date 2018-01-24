@@ -1,6 +1,5 @@
 (ns onto.examples.henleys
-  (:require [onto.core :as o]
-            [onto.examples.helpers :refer :all]))
+  (:require [onto.core :as o]))
 
 (def henleys-short-example
   (o/nodes
@@ -20,6 +19,3 @@
    (o/type "ClassicOxford" "Shirts")
    (o/type "BikerT" "Tshirts")
    (o/type "BikerT" "MensWear")))
-
-(assert (not (tempid-collisions? henleys-full-example))
-        "Test data collision. All members of shop-hashes must hash to unique values")

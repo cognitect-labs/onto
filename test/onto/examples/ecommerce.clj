@@ -1,6 +1,5 @@
 (ns onto.examples.ecommerce
   (:require [onto.core :as o]
-            [onto.examples.helpers :refer :all]
             [onto.traits :as t]))
 
 (defn shipping-methods   [e]    (into #{} (map :carrier (:shipping-methods (.e e)))))

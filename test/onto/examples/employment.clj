@@ -1,6 +1,5 @@
 (ns onto.examples.employment
-  (:require [onto.core :as o]
-            [onto.examples.helpers :refer :all]))
+  (:require [onto.core :as o]))
 
 (def employment-properties
   (o/properties
@@ -23,6 +22,3 @@
   (o/nodes
    (o/t "Spence"  :freelancesTo          "TheFirm")
    (o/t "Long"    :indirectlyContractsTo "TheFirm")))
-
-(assert (not (tempid-collisions? (concat employment-properties workers-in-firm)))
-        "Test data collision. All members must hash to unique values")

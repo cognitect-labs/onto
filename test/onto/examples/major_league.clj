@@ -1,6 +1,5 @@
 (ns onto.examples.major-league
-  (:require [onto.core :as o]
-            [onto.examples.helpers :refer :all]))
+  (:require [onto.core :as o]))
 
 (def kaneda-allstar
   (o/nodes

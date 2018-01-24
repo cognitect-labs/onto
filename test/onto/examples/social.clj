@@ -1,6 +1,5 @@
 (ns onto.examples.social
-  (:require [onto.core :as o]
-            [onto.examples.helpers :refer :all]))
+  (:require [onto.core :as o]))
 
 (def tweeters-are-people
   (o/properties
@@ -26,6 +25,3 @@
   (o/nodes
    (o/v "Michael" :twitter-handle [:nickname "@mtnygard"])
    (o/v "Alex"    :twitter-handle [:nickname "@holy_chao"])))
-
-(assert (not (tempid-collisions? (concat tweeters-are-people tweeters-have-printable-ids two-tweeters)))
-        "Test data collision. All members must hash to unique values")

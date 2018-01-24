@@ -463,14 +463,10 @@
                :when   (not (empty? v))]
            {base {(if (= 1 (count loc)) (first loc) loc) (first v)}})))
 
-(defn- id [p s]
-  (let [h (hash s)]
-    (d/tempid p (if (neg? h) h (- h)))))
-
 (defn ->id
   "Compute an identifier that is 'relatively unique' for the entity name."
   [s]
-  (id :onto s))
+  (str s))
 
 (defn ->aid
   "Compute an identifier that is 'relatively unique' for the property name."

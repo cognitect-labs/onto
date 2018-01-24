@@ -1,6 +1,5 @@
 (ns onto.examples.labeling
-  (:require [onto.core :as o :refer [v]]
-            [onto.examples.helpers :refer :all]))
+  (:require [onto.core :as o :refer [v]]))
 
 (def generic-display
   (o/properties
