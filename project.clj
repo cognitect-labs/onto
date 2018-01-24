@@ -1,4 +1,4 @@
-(defproject com.cognitect/onto "0.1.0-SNAPSHOT"
+(defproject com.cognitect/onto "0.1.1-SNAPSHOT"
   :description  "Ontological inferencing for Datomic"
   :license      {:name "Eclipse Public License"
                  :url "http://www.eclipse.org/legal/epl-v10.html"}
