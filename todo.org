@@ -9,10 +9,10 @@
   CLOSED: [2014-11-29 Sat 12:16]
 - [X] Add SCM info for codox links
 - [X] Use markdown formatting for codox
-* TODO Make a release script
-- [ ] Figure out where to deploy to
-- [ ] Set release version
-- [ ] Clean build
-- [ ] Deploy jar
-- [ ] Bump version to next snapshot
-
+* DONE Make a release script
+  CLOSED: [2018-01-26 Fri 13:46]
+- [X] Figure out where to deploy to
+- [X] Set release version
+- [X] Clean build
+- [X] Deploy jar
+- [X] Bump version to next snapshot
